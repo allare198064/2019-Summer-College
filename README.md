@@ -17,7 +17,7 @@ Number：407410306
  
 - Update a RMarkdown to Github
 
-[ R Markdown ](http://rpubs.com/allare198064/511363)
+- [ R Markdown ](http://rpubs.com/allare198064/511363)
  
 
 【2019.07.11】
