@@ -4,7 +4,7 @@ Course：資料科學程式設計
 
 Student：鄭仲婷
 
-College：TKU CSIE Ⅱ
+College：TKU CSIE
 
 Number：407410306
 
