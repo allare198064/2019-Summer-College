@@ -10,25 +10,25 @@ Number：407410306
 
 # Week_1 
 
--> 7.08
+【2019.07.08】
 
---> Set up R & RStudio
+-> Set up R & RStudio
  
---> Build a RMarkdown
+-> Build a RMarkdown
  
---> Update a RMarkdown to Github
+-> Update a RMarkdown to Github
  
 
--> 7.11
+【2019.07.11】
 
 # Week_2 
 
--> 7.15
+【2019.07.15】
 
--> 7.18
+【2019.07.18】
 
 # Week_3 
 
--> 7.22
+【2019.07.22】
 
--> 7.25
+【2019.07.25】
