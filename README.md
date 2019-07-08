@@ -11,11 +11,14 @@ Number：407410306
 # Week_1 
 
 【2019.07.08】
-- Set up R & RStudio
+
+- Create a GitHub account
+
+- Load R & RStudio
  
-- Build a RMarkdown
+- Set up a R Markdown
  
-- Update a RMarkdown to Github
+- Update a RMarkdown to GitHub
 
 - [ R Markdown ](http://rpubs.com/allare198064/511363)
  
