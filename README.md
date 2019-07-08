@@ -12,13 +12,6 @@ Number：407410306
 
 【2019.07.08】
 
--> Set up R & RStudio
- 
--> Build a RMarkdown
- 
--> Update a RMarkdown to Github
- 
-
 【2019.07.11】
 
 # Week_2 
