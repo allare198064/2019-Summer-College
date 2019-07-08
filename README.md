@@ -12,11 +12,11 @@ Number：407410306
 
 -> 7.08
 
- -> Set up R & RStudio
+--> Set up R & RStudio
  
- -> Build a RMarkdown
+--> Build a RMarkdown
  
- -> Update a RMarkdown to Github
+--> Update a RMarkdown to Github
  
 
 -> 7.11
