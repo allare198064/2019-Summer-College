@@ -8,8 +8,14 @@ College：TKU CSIE
 
 Number：407410306
 
-# Week_1
+# Week_1 
 
-# Week_2
+-> 7.08.11
 
-# Week_3
+# Week_2 
+
+-> 7.15.18
+
+# Week_3 
+
+-> 7.22.25
