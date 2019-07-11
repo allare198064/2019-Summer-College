@@ -1,0 +1,11 @@
+# Week_1
+
+【2019.07.08】
+
+- Set up R & RStudio
+ 
+- Build a RMarkdown
+ 
+- Update a RMarkdown to Github
+ 
+ 
