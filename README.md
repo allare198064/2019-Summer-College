@@ -29,7 +29,7 @@ Number：407410306
 
 - [Taipei City A1 and A2 traffic accident details.csv](https://data.taipei/api/getDatasetInfo/downloadResource?id=2f238b4f-1b27-4085-93e9-d684ef0e2735&rid=ea731a84-e4a1-4523-b981-b733beddbc1f)
 
-- [Data.frame about Taipei City Fixed Speed Photograph Location Table & traffic accident](http://rpubs.com/allare198064/512588)
+- [Data.frame about Taipei City Fixed Speed Photograph Location & traffic accident](http://rpubs.com/allare198064/512588)
 
 # Week_2 
 
