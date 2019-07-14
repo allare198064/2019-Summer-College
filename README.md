@@ -25,6 +25,8 @@ Number：407410306
 
 【2019.07.11】
 
+- [dplyr Tutorial](http://rpubs.com/allare198064/512588)
+
 # Week_2 
 
 【2019.07.15】
