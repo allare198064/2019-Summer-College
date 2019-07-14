@@ -20,7 +20,7 @@ Number：407410306
  
 - Update a RMarkdown to GitHub
 
-- [ R Markdown ](http://rpubs.com/allare198064/511363)
+- [ R Markdown ](https://allare198064.github.io/2019-Summer-College/Week_1/0708_Mom/Text_1.html)
  
 
 【2019.07.11】
