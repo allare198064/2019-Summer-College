@@ -12,6 +12,8 @@ Number：407410306
 
 【2019.07.08】
 
+- [My GitHub](https://allare198064.github.io/2019-Summer-College/)
+
 - Create a GitHub account
 
 - Load R & RStudio
