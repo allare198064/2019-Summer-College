@@ -1,0 +1,167 @@
+---
+title: "Test_3"
+author: "Insonlin"
+date: "2019/7/15"
+output: html_document
+---
+
+# § Target: 
+探討架有測速照相的路段發生車禍的次數跟沒有測速照相的路段發生車禍的次數相比是否會大幅降低
+
+
+# § Load Library
+```{r}
+# install.packages("ggplot2")
+library(downloader)
+library(dplyr)
+library(ggplot2)
+```
+
+# § Taipei City Fixed Speed Photograph Location Table
+```{r}
+url <- "https://data.taipei/api/getDatasetInfo/downloadResource?id=745b8808-061f-4f5b-9a62-da1590c049a9&rid=5012e8ba-5ace-4821-8482-ee07c147fd0a"
+filename <- "Taipei City Fixed Speed Photograph Location Table.csv"
+
+if (!file.exists(filename)) download(url,filename)
+A <- read.csv("Taipei City Fixed Speed Photograph Location Table.csv")
+
+head(A)
+```
+
+# § Organize data -> Taipei City Fixed Speed Photograph Location Table
+```{r}
+Data_A1 <- select(A, area, road, location)
+
+head(Data_A1)
+```
+
+# § Taipei City A1 and A2 traffic accident details
+```{r}
+url <- "https://data.taipei/api/getDatasetInfo/downloadResource?id=2f238b4f-1b27-4085-93e9-d684ef0e2735&rid=ea731a84-e4a1-4523-b981-b733beddbc1f"
+filename <- "Taipei City A1 and A2 traffic accident details.csv"
+if (!file.exists(filename)) download(url,filename)
+
+B <- read.csv("Taipei City A1 and A2 traffic accident details.csv")
+
+head(B)
+```
+
+# § Organize data -> Taipei City A1 and A2 traffic accident details
+```{r}
+Data_B1 <- select(B, 肇事地點)
+
+head(Data_B1)
+```
+
+# § Make a Data.frame
+```{r}
+Data<-data.frame(Area=c(Data_A1[1]), 
+      Road=c(Data_A1[2]), 
+      Location=c(Data_A1[3]), 
+      With_Monitor=c(0),
+      Without_Monitor=c(0))
+
+Data$With_Monitor[1:139]<-0
+Data$Without_Monitor[1:139]<-0
+i<-0
+check<-0
+
+for (j in 1:50329){
+  for (k in 1:139){
+    if (grepl(Data$road[k], Data_B1$肇事地點[j])){
+      if (grepl(Data$location[k], Data_B1$肇事地點[j])){
+        Data$With_Monitor[k]<-Data$With_Monitor[k]+1
+        check<-1
+        break
+      }
+      else{
+        check<-k
+      }
+    }
+  }
+  if (check!=1){
+    i<-i+1
+    Data$Without_Monitor[check]<-Data$Without_Monitor[check]+1
+  }
+  check<-0
+}
+
+# The times of traffic accidents whihout monitor :
+head(i)
+
+head(Data)
+
+Data
+```
+
+# § 計算各地區有無測速照相發生車禍的次數
+```{r}
+Chart <- data.frame(Area=c( "士林", "大同", "大安", "中山", 
+                            "中正", "內湖", "文山", "北投", 
+                            "松山", "信義", "南港", "南華", 
+                            "總計"), 
+                    With_Monitor=c(0), 
+                    Without_Monitor=c(0))
+
+
+for(i in 1:139){
+  for(j in 1:12){
+    if(grepl(Chart$Area[j], Data$area[i])){
+      Chart$With_Monitor[j]<-Chart$With_Monito[j]+  
+                             Data$With_Monitor[i]
+      Chart$With_Monitor[13]<-Chart$With_Monito[13]+  
+                             Data$With_Monitor[i]
+      
+      Chart$Without_Monitor[j]<-Chart$Without_Monito[j]+ 
+                                Data$Without_Monitor[i]
+      Chart$Without_Monitor[13]<-Chart$Without_Monito[13]+ 
+                                Data$Without_Monitor[i]
+    }
+  }
+}
+
+head(Chart)
+
+```
+
+# § 有測速照相的車禍發生次數
+```{r}
+ggplot(Chart, aes(x = Area, y = With_Monitor)) +geom_point(aes(color="Area"))
+```
+
+# § 沒有測速照相的車禍發生次數
+```{r}
+ggplot(Chart, aes(x = Area, y = Without_Monitor)) +geom_point(aes(color="Area"))
+```
+
+# § 各地區有無測速照相發生車禍次數折線圖
+```{r}
+ggplot(Chart, aes(x = Area, y = Times, group = 1)) +
+  geom_point(aes(y=With_Monitor, color="With_Monitor"))+ 
+  geom_line(aes(y=With_Monitor, color="With_Monitor"))+
+  
+  geom_point(aes(y=Without_Monitor, color="Without_Monitor"))+ 
+  geom_line(aes(y=Without_Monitor, color="Without_Monitor"))
+
+```
+
+# § 有無測速照相發生車禍次數之差_折線圖
+```{r}
+ggplot(Chart, aes(x = Area, y = Difference, group = 1)) +
+  geom_point(aes(y=Without_Monitor-With_Monitor, color="Without_Monitor-With_Monitor"))+ 
+  geom_line(aes(y=Without_Monitor-With_Monitor, color="Without_Monitor-With_Monitor"))
+
+```
+
+# § 有無測速照相發生車禍次數之差_長條圖
+```{r}
+ggplot(Chart, aes(x = Area, y = Difference, group = 1)) +
+  geom_bar(data=Chart, aes(y=Without_Monitor-With_Monitor), stat = "identity")
+
+```
+
+# § Conclusion:
+  架有測速照相的路段發生車禍的次數遠低於沒有測速照相的路段
+
+# § Inference:
+  根據此統計結果推論:架設測速照相能有效降低車禍發生的次數
