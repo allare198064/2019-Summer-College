@@ -1,6 +1,6 @@
 # 2019 Summer College
 
-Course：資料科學程式設計
+Course：Data Science Programming
 
 Student：鄭仲婷
 
