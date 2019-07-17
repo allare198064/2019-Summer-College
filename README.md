@@ -39,7 +39,7 @@ Number：407410306
 
 【2019.07.15】
 
-- 使用 R ggplot2 進行資料視覺化
+- Using R ggplot2 making Data visualization
 
 - [ggplot2's Test](
 
