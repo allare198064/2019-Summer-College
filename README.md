@@ -41,7 +41,7 @@ Number：407410306
 
 - Using R ggplot2 making Data visualization
 
-- [ggplot2's Test](
+- [ggplot2's Test](https://allare198064.github.io/2019-Summer-College/Week_2/0716_Mon/Test_3.html)
 
 【2019.07.18】
 
