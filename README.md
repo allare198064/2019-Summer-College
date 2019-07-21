@@ -44,6 +44,11 @@ Number：407410306
 - [ggplot2's Test](https://allare198064.github.io/2019-Summer-College/Week_2/0716_Mon/Test_3.html)
 
 【2019.07.18】
+- Text analysis by jiebaR
+
+- Make wordcloud by wordcloud2
+
+- [My TXT](https://allare198064.github.io/2019-Summer-College/Week_2/0718_Thu/Test_4.html)
 
 # Week_3 
 
