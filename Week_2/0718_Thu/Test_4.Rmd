@@ -1,0 +1,122 @@
+---
+title: "Test_4"
+author: "Insonlin"
+date: "2019/7/18"
+output: html_document
+---
+#install.packages('devtools')  
+#devtools::install_github("lchiffon/wordcloud2")  
+
+# § Load library
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tmcn)
+library(NLP)
+library(tm)
+library(jiebaRD)
+library(jiebaR)
+library(RColorBrewer)
+library(wordcloud)
+library(rvest)
+library(readr)
+library(wordcloud2)
+
+Book<-read_file("/Users/Tiffany/Desktop/DataScience/2019.07.18_Thu/鳳臨天下.txt")
+
+```
+# § 切割器
+```{r}
+cutter = worker()
+```
+# § 新增七國名稱
+```{r}
+new_user_word(cutter, "天辰")
+new_user_word(cutter, "傲雲")
+new_user_word(cutter, "雪聖")
+new_user_word(cutter, "後金")
+new_user_word(cutter, "陳國")
+new_user_word(cutter, "趙國")
+new_user_word(cutter, "南宋")
+Country <- data.frame(Country=c("天辰", "傲雲", "雪聖", "後金", "陳國", "趙國", "南宋"), Frequency=c(0))
+```
+
+
+# § 新增主要角色名稱
+```{r}
+new_user_word(cutter, "琉月")
+new_user_word(cutter, "軒轅澈")
+new_user_word(cutter, "獨孤夜")
+new_user_word(cutter, "雲召")
+new_user_word(cutter, "歐陽於飛")
+Character <- data.frame(Name=c("琉月", "軒轅澈", "獨孤夜", "雲召", "歐陽於飛"), Frequency=c(0))
+```
+
+# § 切割文字
+```{r}
+BookCut<-segment(Book, cutter)
+```
+
+# § 把切割後的文字做成data.frame
+```{r}
+book = as.data.frame(table(unlist(BookCut)))
+book = book[order(book$Freq, decreasing = T), ]
+```
+
+# § Book切割後出現次數排序
+```{r}
+head(sort(table(BookCut), decreasing=T))
+```
+
+# § 把國家 & 角色出現的次數做成data.frame
+```{r}
+for(i in 1:37839){
+  for(j in 1:7){
+    if(grepl(Country$Country[j], book$Var1[i])){
+      Country$Frequency[j] <- book$Freq[i]
+      break
+    }
+  }
+  for(k in 1:5){
+    if(grepl(Character$Name[k], book$Var1[i])){
+      Character$Frequency[k] <- book$Freq[i]
+      break
+    }
+  }
+}
+head(Country)
+head(Character)
+```
+
+# § 文字雲_國家
+```{r}
+wordcloud2(data = Country, color = "random-light", size = 1)
+```
+
+# § 文字雲_角色
+```{r}
+wordcloud2(data = Character, color = "random-light", size = 0.8)
+```
+
+# § 國家出現次數_長條圖+折線圖
+```{r}
+ggplot(Country, aes(x = Country, y = Frequency, group = 1)) +
+  geom_bar(data=Country, aes(y=Frequency), stat = "identity") +
+  geom_point(aes(y=Frequency, color="Country")) + 
+  geom_line(aes(y=Frequency, color="Frequency"))
+```
+
+# § 角色出現次數_長條圖+折線圖
+```{r}
+ggplot(Character, aes(x = Name, y = Frequency, group = 1)) +
+  geom_bar(data=Character, aes(y=Frequency), stat = "identity") +
+  geom_point(aes(y=Frequency, color="Frequency")) + 
+  geom_line(aes(y=Frequency, color="Name"))
+```
+
+
+
+
+
+
+
