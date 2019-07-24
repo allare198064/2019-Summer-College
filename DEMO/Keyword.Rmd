@@ -1,0 +1,381 @@
+---
+title: "Keyword"
+author: "Insonlin"
+date: "2019/7/24"
+output: html_document
+---
+
+
+
+# § Load library
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tmcn)
+library(NLP)
+library(tm)
+library(jiebaRD)
+library(jiebaR)
+library(RColorBrewer)
+library(wordcloud)
+library(rvest)
+library(readr)
+library(wordcloud2)
+```
+# 讀取、切割
+```{r}
+Movie <- read.csv("tmdb_5000_movies.csv")
+
+KT <- read.csv("Keywords_Times.csv")
+KT <- data.frame(Keywords = KT$Drama)
+
+# 
+MK <- read.csv("Movies_Keywords.csv")
+MK <- select(MK, -X)
+
+head(MK[1,][,40])
+
+if (MK[1,][,40]=="") {
+  i<-1
+}else{
+  i<-0
+}
+head(KT$Keywords[1])
+
+```
+# 製作Keyword的Data.frame
+```{r}
+R <- data.frame(Revenue = Movie$revenue)
+
+Keyword <- data.frame(Drama = R$Revenue[1:100], Comedy = R$Revenue[1:100], Thriller = R$Revenue[1:100], Money = R$Revenue[1:100], Fight = R$Revenue[1:100])
+
+
+for(i in 1:100){
+  for(j in 1:5){
+    Keyword[i,][,j]<-0
+  }
+}
+
+
+```
+# Drama #1
+```{r}
+A <- 0
+A <- grep("drama", MK$X0)
+for (i in 1:50){
+  A <- rbind(A, grep("drama", MK[,i]))
+}
+
+a <- vector("numeric", 100)
+t<-1
+check<-0
+for(i in 1:14){
+  for(j in 1:4){
+    for(k in 1:t){
+      if(A[i,][j]==a[k]){
+        check<-0
+        break
+      }
+      else{
+        check<-1
+      }
+    }
+    if(check==1){
+      a[t] <- A[i,][j]
+      t <- t+1
+      check<-0
+    }
+  }
+}
+t<-0
+for(i in 1:100){
+  if (a[i]==0){
+    break
+  }
+  else{
+    Keyword$Drama[t]<-R$Revenue[a[i]]
+    t<-t+1
+  }
+}
+```
+
+# Comedy #2
+```{r}
+A <- 0
+A <- grep("comedy", MK$X0)
+for (i in 1:50){
+  A <- rbind(A, grep("comedy", MK[,i]))
+}
+
+a <- vector("numeric", 100)
+t<-1
+check<-0
+for(i in 1:14){
+  for(j in 1:4){
+    for(k in 1:t){
+      if(A[i,][j]==a[k]){
+        check<-0
+        break
+      }
+      else{
+        check<-1
+      }
+    }
+    if(check==1){
+      a[t] <- A[i,][j]
+      t <- t+1
+      check<-0
+    }
+  }
+}
+t<-0
+for(i in 1:100){
+  if (a[i]==0){
+    break
+  }
+  else{
+    Keyword$Comedy[t]<-R$Revenue[a[i]]
+    t<-t+1
+  }
+}
+```
+
+# Thriller #3
+```{r}
+A <- 0
+A <- grep("thriller", MK$X0)
+for (i in 1:50){
+  A <- rbind(A, grep("thriller", MK[,i]))
+}
+
+a <- vector("numeric", 100)
+t<-1
+check<-0
+for(i in 1:12){
+  for(j in 1:4){
+    for(k in 1:t){
+      if(isTRUE(A[i,][j]==a[k])) {
+        check<-0
+        break
+      }
+      else{
+        check<-1
+      }
+    }
+    if(check==1){
+      a[t] <- A[i,][j]
+      t <- t+1
+      check<-0
+    }
+  }
+}
+t<-0
+for(i in 1:100){
+  if (isTRUE(a[i]==0)){
+    break
+  }
+  else{
+    Keyword$Thriller[t]<-R$Revenue[a[i]]
+    t<-t+1
+  }
+}
+```
+
+# Money #73
+```{r}
+A <- 0
+A <- grep("money", MK$X0)
+for (i in 1:50){
+  A <- rbind(A, grep("money", MK[,i]))
+}
+
+a <- vector("numeric", 100)
+t<-1
+check<-0
+for(i in 1:13){
+  for(j in 1:4){
+    for(k in 1:t){
+      if(isTRUE(A[i,][j]==a[k])){
+        check<-0
+        break
+      }
+      else{
+        check<-1
+      }
+    }
+    if(check==1){
+      a[t] <- A[i,][j]
+      t <- t+1
+      check<-0
+    }
+  }
+}
+t<-0
+for(i in 1:100){
+  if (isTRUE(a[i]==0)){
+    break
+  }
+  else{
+    Keyword$Money[t]<-R$Revenue[a[i]]
+    t<-t+1
+  }
+}
+```
+
+#	Fight #75
+```{r}
+A <- 0
+A <- grep("fight", MK$X0)
+for (i in 1:50){
+  A <- rbind(A, grep("fight", MK[,i]))
+}
+
+a <- vector("numeric", 100)
+t<-1
+check<-0
+for(i in 1:9){
+  for(j in 1:4){
+    for(k in 1:t){
+      if(isTRUE(A[i,][j]==a[k])){
+        check<-0
+        break
+      }
+      else{
+        check<-1
+      }
+    }
+    if(check==1){
+      a[t] <- A[i,][j]
+      t <- t+1
+      check<-0
+    }
+  }
+}
+t<-0
+a
+for(i in 1:100){
+  if (isTRUE(a[i]==0)){
+    break
+  }
+  else{
+    Keyword$Fight[t]<-R$Revenue[a[i]]
+    t<-t+1
+  }
+}
+```
+```{R}
+for(i in 1:100){
+  for(j in 1:5){
+    if(is.na(Keyword[i,][j])){
+      Keyword[i,][j] <- 0
+    }
+  }
+}
+
+K <- data.frame(Num = c(1:45), Drama = Keyword$Drama[1:45], Comedy = Keyword$Comedy[1:45], Thriller = Keyword$Thriller[1:45], Money = Keyword$Money[1:45], Fight = Keyword$Fight[1:45])
+
+
+```
+
+# Chart_Drama
+```{r}
+ggplot(K, aes(x = Num, y = Drama, group = 1))+ 
+  geom_line(aes(y=Drama, color="Num"))+ 
+  geom_point(aes(y=Drama, color="Num"))
+
+ggplot(K, aes(x = Num, y = Drama, group = 1))+
+  geom_bar(data=K, aes(y=Drama), stat = "identity")
+  
+
+```
+# Chart_Comedy
+```{r}
+ggplot(K, aes(x = Num, y = Drama, group = 1))+ 
+  geom_line(aes(y=Comedy, color="Num"))+ 
+  geom_point(aes(y=Comedy, color="Num"))
+
+ggplot(K, aes(x = Num, y = Comedy, group = 1))+
+  geom_bar(data=K, aes(y=Comedy), stat = "identity")
+  
+
+```
+# Chart_Thriller
+```{r}
+ggplot(K, aes(x = Num, y = Drama, group = 1))+ 
+  geom_line(aes(y=Thriller, color="Num"))+ 
+  geom_point(aes(y=Thriller, color="Num"))
+
+ggplot(K, aes(x = Num, y = Thriller, group = 1))+
+  geom_bar(data=K, aes(y=Thriller), stat = "identity")
+  
+
+```
+# Chart_Money
+```{r}
+ggplot(K, aes(x = Num, y = Drama, group = 1))+ 
+  geom_line(aes(y=Money, color="Num"))+ 
+  geom_point(aes(y=Money, color="Num"))
+
+ggplot(K, aes(x = Num, y = Money, group = 1))+
+  geom_bar(data=K, aes(y=Money), stat = "identity")
+  
+
+```
+# Chart_Fight
+```{r}
+ggplot(K, aes(x = Num, y = Drama, group = 1))+ 
+  geom_line(aes(y=Fight, color="Num"))+ 
+  geom_point(aes(y=Fight, color="Num"))
+
+ggplot(K, aes(x = Num, y = Fight, group = 1))+
+  geom_bar(data=K, aes(y=Fight), stat = "identity")
+  
+
+```
+
+# Chart_Drama+Money
+```{r}
+ggplot(K, aes(x = Num, y = Drama, group = 1))+ 
+  geom_bar(data=K, aes(y=Drama, color="Drama"), stat = "identity")+ 
+  geom_bar(data=K, aes(y=Money, color="Money"), stat = "identity")+  
+  geom_point(aes(y=Drama, color="Drama"))+ 
+  geom_point(aes(y=Money, color="Money"))
+```
+
+# Chart_Comedy+Fight
+```{r}
+ggplot(K, aes(x = Num, y = Drama, group = 1))+ 
+  geom_bar(data=K, aes(y=Comedy, color="Comedy"), 
+           stat = "identity")+ 
+  geom_bar(data=K, aes(y=Fight, color="Fight"), stat = "identity")+ 
+  geom_point(aes(y=Comedy, color="Comedy"))+ 
+  geom_point(aes(y=Fight, color="Fight"))
+```
+
+# 小節
+
+- 關鍵字出現較多次的電影大部分賺的比關鍵字出現較少次的電影更多
+
+- 推論1 : 關鍵字出現較多次的電影總類更能吸引觀眾
+
+- 推論2 : 拍攝關鍵字出現較多次的總類的電影，成功賺錢的機會更大
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
